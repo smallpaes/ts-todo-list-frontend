@@ -2,6 +2,8 @@ import { FC, ReactElement } from 'react';
 
 import { Grid } from '@mui/material';
 
+import Profile from '../profile/Profile';
+
 const Sidebar: FC = (): ReactElement => {
   return (
     <Grid
@@ -20,7 +22,7 @@ const Sidebar: FC = (): ReactElement => {
         alignItems: 'center',
       }}
     >
-      <h2>sidebar</h2>
+      <Profile name="Mike" />
     </Grid>
   );
 };
