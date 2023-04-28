@@ -2,6 +2,7 @@ import { FC, ReactElement } from 'react';
 
 import { Box, Typography, Stack } from '@mui/material';
 import TaskInputField from './TaskInputField';
+import TaskDateField from './TaskDateField';
 
 const CreateTaskForm: FC = (): ReactElement => {
   return (
@@ -31,6 +32,7 @@ const CreateTaskForm: FC = (): ReactElement => {
           rows={4}
           multiline
         />
+        <TaskDateField />
       </Stack>
     </Box>
   );
