@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 import { Grid, Box } from '@mui/material';
 import TaskCounter from '../taskCounter/TaskCounter';
+import Task from '../task/Task';
 
 const TaskArea: FC = (): ReactElement => {
   return (
@@ -26,10 +27,17 @@ const TaskArea: FC = (): ReactElement => {
           <TaskCounter />
           <TaskCounter />
         </Grid>
-        <Grid item display="flex" flexDirection="column" md={8} xs={10} mb={8}>
-          <Box>Task Description</Box>
-          <Box>Task Description</Box>
-          <Box>Task Description</Box>
+        <Grid
+          item
+          display="flex"
+          flexDirection="column"
+          md={8}
+          xs={10}
+          mb={8}
+          gap={2}
+        >
+          <Task />
+          <Task />
         </Grid>
       </Grid>
     </Grid>
