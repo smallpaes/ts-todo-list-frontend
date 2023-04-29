@@ -4,8 +4,21 @@ import { Box } from '@mui/material';
 import TaskHeader from './TaskHeader';
 import TaskDescription from './TaskDescription';
 import TaskFooter from './TaskFooter';
+import ITask from './interfaces/ITask';
+import { getBorderColor } from './helpers/getBorderColor';
+import { Priority } from '../taskForm/enums/Priority';
+import { Status } from '../taskForm/enums/Status';
 
-const Task: FC = (props): ReactElement => {
+const Task: FC<ITask> = ({
+  title,
+  date,
+  description,
+  priority = Priority.NORMAL,
+  status = Status.DONE,
+  checked,
+  onChange,
+  onClick,
+}): ReactElement => {
   return (
     <Box
       display="flex"
@@ -14,15 +27,15 @@ const Task: FC = (props): ReactElement => {
       flexDirection="column"
       border="1px solid"
       borderRadius="8px"
-      borderColor="error.light"
+      borderColor={`${getBorderColor(priority)}`}
       p={2}
       sx={{
         backgroundColor: 'background.paper',
       }}
     >
-      <TaskHeader />
-      <TaskDescription />
-      <TaskFooter />
+      <TaskHeader title={title} date={date} />
+      <TaskDescription description={description} />
+      <TaskFooter checked={checked} onChange={onChange} onClick={onClick} />
     </Box>
   );
 };

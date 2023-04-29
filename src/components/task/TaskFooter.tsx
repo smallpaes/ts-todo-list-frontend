@@ -4,6 +4,7 @@ import { Box, Switch, FormControlLabel, Button } from '@mui/material';
 import ITaskFooter from './interfaces/ITaskFooter';
 
 const TaskFooter: FC<ITaskFooter> = ({
+  checked = false,
   onChange = (e) => console.log(e),
   onClick = (e) => console.log(e),
 }): ReactElement => {
@@ -16,7 +17,13 @@ const TaskFooter: FC<ITaskFooter> = ({
     >
       <FormControlLabel
         label="In Progress"
-        control={<Switch color="warning" onChange={(e) => onChange(e)} />}
+        control={
+          <Switch
+            checked={checked}
+            color="warning"
+            onChange={(e) => onChange(e)}
+          />
+        }
       />
       <Button
         variant="contained"
