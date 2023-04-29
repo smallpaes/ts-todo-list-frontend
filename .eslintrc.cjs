@@ -10,33 +10,33 @@ module.exports = {
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: { 
-    ecmaVersion: 'latest', 
-    sourceType: 'module' 
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   plugins: [
     'import',
     'react-refresh',
-    'react-hook',
-    'react', 
-    'jsx-a11y', 
+    'react-hooks',
+    'react',
+    'jsx-a11y',
     '@typescript-eslint',
-    'prettier'
+    'prettier',
   ],
   rules: {
     'react-refresh/only-export-components': 'warn',
   },
   settings: {
-    'react': {
-      'version': 'detect'
+    react: {
+      version: 'detect',
     },
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx']
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
-      'typescript': {
-        'alwaysTryTypes': true
-      }
-    }
-  }
-}
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
+  },
+};
