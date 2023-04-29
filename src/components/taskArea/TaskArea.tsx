@@ -7,7 +7,7 @@ import Task from '../task/Task';
 
 const TaskArea: FC = (): ReactElement => {
   return (
-    <Grid item md={8} px={4}>
+    <Grid item md={8} px={4} xs={12}>
       <Box mb={8} px={4} textAlign="center">
         <h1>Task Dashboard</h1>
         <h3>{dayjs().format('dddd, LL')}</h3>
