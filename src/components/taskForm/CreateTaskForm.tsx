@@ -1,6 +1,13 @@
 import { FC, ReactElement, useState } from 'react';
 
-import { Box, Typography, Stack } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Stack,
+  Button,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 import TaskInputField from './TaskInputField';
 import TaskDateField from './TaskDateField';
 import TaskSelectField from './TaskSelectField';
@@ -23,6 +30,9 @@ const CreateTaskForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
+      <Alert severity="success" sx={{ width: '100%' }}>
+        <AlertTitle>Task Created Successfully</AlertTitle>
+      </Alert>
       <Typography mb={2} component="h2" variant="h6" color="text.primary">
         Create A Task
       </Typography>
@@ -67,6 +77,9 @@ const CreateTaskForm: FC = (): ReactElement => {
             ]}
           />
         </Stack>
+        <Button variant="contained" size="large" fullWidth>
+          Create
+        </Button>
       </Stack>
     </Box>
   );
