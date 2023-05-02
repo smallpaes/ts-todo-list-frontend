@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 
 import { Box, Typography, Stack } from '@mui/material';
 import TaskInputField from './TaskInputField';
@@ -6,8 +6,14 @@ import TaskDateField from './TaskDateField';
 import TaskSelectField from './TaskSelectField';
 import { Status } from './enums/Status';
 import { Priority } from './enums/Priority';
+import dayjs, { Dayjs } from 'dayjs';
 
 const CreateTaskForm: FC = (): ReactElement => {
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [date, setDate] = useState<Dayjs | null>(dayjs());
+  const [status, setStatus] = useState<string>(Status.TODO);
+  const [priority, setPriority] = useState<string>(Priority.NORMAL);
   return (
     <Box
       display="flex"
@@ -26,6 +32,7 @@ const CreateTaskForm: FC = (): ReactElement => {
           name="title"
           label="title"
           placeholder="Task Title"
+          onChange={(e) => setTitle(e.target.value)}
         />
         <TaskInputField
           id="description"
@@ -34,20 +41,25 @@ const CreateTaskForm: FC = (): ReactElement => {
           placeholder="Task Description"
           rows={4}
           multiline
+          onChange={(e) => setDescription(e.target.value)}
         />
-        <TaskDateField />
+        <TaskDateField value={date} onChange={(date) => setDate(date)} />
         <Stack direction="row" spacing={2} width="100%">
           <TaskSelectField
+            value={status}
             label="Status"
             name="status"
+            onChange={(e) => setStatus(e.target.value as Status)}
             options={[
               { value: Status.TODO, label: Status.TODO },
               { value: Status.IN_PROGRESS, label: Status.IN_PROGRESS },
             ]}
           />
           <TaskSelectField
+            value={priority}
             label="Priority"
             name="priority"
+            onChange={(e) => setPriority(e.target.value as Priority)}
             options={[
               { value: Priority.LOW, label: Priority.LOW },
               { value: Priority.NORMAL, label: Priority.NORMAL },
