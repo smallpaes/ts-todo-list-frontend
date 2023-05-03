@@ -1,5 +1,5 @@
-import { FC, ReactElement, useState } from 'react';
-
+import { FC, ReactElement, useState, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import {
   Box,
   Typography,
@@ -14,6 +14,8 @@ import TaskSelectField from './TaskSelectField';
 import { Status } from './enums/Status';
 import { Priority } from './enums/Priority';
 import dayjs, { Dayjs } from 'dayjs';
+import ICreateTask from '../taskArea/interfaces/ICreateTask';
+import taskAPI from '../../apis/task';
 
 const CreateTaskForm: FC = (): ReactElement => {
   const [title, setTitle] = useState<string>('');
@@ -21,6 +23,36 @@ const CreateTaskForm: FC = (): ReactElement => {
   const [date, setDate] = useState<Dayjs | null>(dayjs());
   const [status, setStatus] = useState<string>(Status.TODO);
   const [priority, setPriority] = useState<string>(Priority.NORMAL);
+  const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+
+  const { mutate, isLoading, isSuccess } = useMutation({
+    mutationFn: taskAPI.postNewTask,
+  });
+
+  const isSubmitDisabled =
+    !title || !description || !date || !status || !priority || isLoading;
+
+  const handleSubmit = () => {
+    if (title.trim() === '' || description.trim() === '' || !date) return;
+    const task: ICreateTask = {
+      title,
+      description,
+      status,
+      priority,
+      date: date.toString(),
+    };
+    mutate(task);
+  };
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    setShowSuccessAlert(true);
+    const timeout = setTimeout(() => {
+      setShowSuccessAlert(false);
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [isSuccess]);
+
   return (
     <Box
       display="flex"
@@ -30,9 +62,11 @@ const CreateTaskForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
-      <Alert severity="success" sx={{ width: '100%' }}>
-        <AlertTitle>Task Created Successfully</AlertTitle>
-      </Alert>
+      {showSuccessAlert && (
+        <Alert severity="success" sx={{ width: '100%' }}>
+          <AlertTitle>Task Created Successfully</AlertTitle>
+        </Alert>
+      )}
       <Typography mb={2} component="h2" variant="h6" color="text.primary">
         Create A Task
       </Typography>
@@ -41,6 +75,7 @@ const CreateTaskForm: FC = (): ReactElement => {
           id="title"
           name="title"
           label="title"
+          disabled={isLoading}
           placeholder="Task Title"
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -51,14 +86,20 @@ const CreateTaskForm: FC = (): ReactElement => {
           placeholder="Task Description"
           rows={4}
           multiline
+          disabled={isLoading}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <TaskDateField value={date} onChange={(date) => setDate(date)} />
+        <TaskDateField
+          value={date}
+          disabled={isLoading}
+          onChange={(date) => setDate(date)}
+        />
         <Stack direction="row" spacing={2} width="100%">
           <TaskSelectField
             value={status}
             label="Status"
             name="status"
+            disabled={isLoading}
             onChange={(e) => setStatus(e.target.value as Status)}
             options={[
               { value: Status.TODO, label: Status.TODO },
@@ -69,6 +110,7 @@ const CreateTaskForm: FC = (): ReactElement => {
             value={priority}
             label="Priority"
             name="priority"
+            disabled={isLoading}
             onChange={(e) => setPriority(e.target.value as Priority)}
             options={[
               { value: Priority.LOW, label: Priority.LOW },
@@ -77,7 +119,13 @@ const CreateTaskForm: FC = (): ReactElement => {
             ]}
           />
         </Stack>
-        <Button variant="contained" size="large" fullWidth>
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          disabled={isSubmitDisabled}
+          onClick={handleSubmit}
+        >
           Create
         </Button>
       </Stack>

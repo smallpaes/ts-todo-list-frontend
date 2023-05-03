@@ -1,6 +1,6 @@
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-function getRequestBody(method: Method, data: unknown): RequestInit {
+function formRequestBody(method: Method, data: unknown): RequestInit {
   const request: RequestInit = {
     method,
     headers: { 'Content-Type': 'application/json' },
@@ -12,12 +12,12 @@ function getRequestBody(method: Method, data: unknown): RequestInit {
   };
 }
 
-export async function sendApiRequest<T>(
+export async function buildRequest<T>(
   url: string,
   method: Method,
   data: unknown = {},
 ): Promise<T> {
-  const res = await fetch(url, getRequestBody(method, data));
+  const res = await fetch(url, formRequestBody(method, data));
   if (!res.ok) throw new Error('An error occurred: ' + res.status);
   return (await res.json()) as Promise<T>;
 }
