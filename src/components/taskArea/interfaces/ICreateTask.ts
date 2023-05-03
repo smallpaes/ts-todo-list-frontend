@@ -1,5 +1,4 @@
 export default interface ICreateTask {
-  id?: string;
   title: string;
   description: string;
   date: string;

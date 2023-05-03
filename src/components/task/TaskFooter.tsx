@@ -2,9 +2,11 @@ import { FC, ReactElement } from 'react';
 
 import { Box, Switch, FormControlLabel, Button } from '@mui/material';
 import ITaskFooter from './interfaces/ITaskFooter';
+import { Status } from '../taskForm/enums/Status';
 
 const TaskFooter: FC<ITaskFooter> = ({
-  checked = false,
+  id,
+  status,
   onChange = (e) => console.log(e),
   onClick = (e) => console.log(e),
 }): ReactElement => {
@@ -19,7 +21,7 @@ const TaskFooter: FC<ITaskFooter> = ({
         label="In Progress"
         control={
           <Switch
-            checked={checked}
+            checked={status === Status.IN_PROGRESS}
             color="warning"
             onChange={(e) => onChange(e)}
           />

@@ -10,12 +10,12 @@ import { Priority } from '../taskForm/enums/Priority';
 import { Status } from '../taskForm/enums/Status';
 
 const Task: FC<ITask> = ({
+  id,
   title,
   date,
   description,
   priority = Priority.NORMAL,
   status = Status.DONE,
-  checked,
   onChange,
   onClick,
 }): ReactElement => {
@@ -35,7 +35,12 @@ const Task: FC<ITask> = ({
     >
       <TaskHeader title={title} date={date} />
       <TaskDescription description={description} />
-      <TaskFooter checked={checked} onChange={onChange} onClick={onClick} />
+      <TaskFooter
+        id={id}
+        status={status}
+        onChange={onChange}
+        onClick={onClick}
+      />
     </Box>
   );
 };

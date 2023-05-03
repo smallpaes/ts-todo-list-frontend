@@ -1,6 +1,6 @@
-import React from 'react';
 export default interface ITaskFooter {
-  checked?: boolean;
+  id: string;
+  status: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (
     event:
