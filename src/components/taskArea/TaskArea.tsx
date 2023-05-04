@@ -7,9 +7,15 @@ import Task from '../task/Task';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import taskAPI from '../../apis/task';
 import { Status } from '../taskForm/enums/Status';
+import { countTask } from './helpers/countTask';
 
 const TaskArea: FC = (): ReactElement => {
-  const { data, isLoading, isError, refetch } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ['tasks'],
     queryFn: taskAPI.getTasks,
   });
@@ -57,9 +63,18 @@ const TaskArea: FC = (): ReactElement => {
           xs={12}
           mb={8}
         >
-          <TaskCounter />
-          <TaskCounter />
-          <TaskCounter />
+          <TaskCounter
+            status={Status.TODO}
+            count={countTask(data, Status.TODO)}
+          />
+          <TaskCounter
+            status={Status.IN_PROGRESS}
+            count={countTask(data, Status.IN_PROGRESS)}
+          />
+          <TaskCounter
+            status={Status.DONE}
+            count={countTask(data, Status.DONE)}
+          />
         </Grid>
         <Grid
           item
