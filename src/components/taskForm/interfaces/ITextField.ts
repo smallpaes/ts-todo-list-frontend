@@ -1,4 +1,3 @@
-import React from 'react';
 import IDisabled from './IDisabled';
 // import { InputBaseProps } from '@mui/material';
 export default interface ITextField extends IDisabled {
@@ -6,6 +5,7 @@ export default interface ITextField extends IDisabled {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   id: string;
+  value: string;
   label: string;
   placeholder?: string;
   name: string;

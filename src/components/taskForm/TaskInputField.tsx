@@ -8,6 +8,7 @@ const TaskInputField: FC<ITextField> = ({
   disabled = false,
   id,
   label,
+  value,
   placeholder,
   name,
   rows = 1,
@@ -16,6 +17,7 @@ const TaskInputField: FC<ITextField> = ({
   return (
     <TextField
       id={id}
+      value={value}
       label={label}
       placeholder={placeholder}
       variant="outlined"

@@ -48,8 +48,18 @@ const CreateTaskForm: FC = (): ReactElement => {
     mutate(task);
   };
 
+  const clearForm = () => {
+    console.log('clear');
+    setTitle('');
+    setDescription('');
+    setDate(dayjs());
+    setStatus(Status.TODO);
+    setPriority(Priority.NORMAL);
+  };
+
   useEffect(() => {
     if (!isSuccess) return;
+    clearForm();
     setShowSuccessAlert(true);
     const timeout = setTimeout(() => {
       setShowSuccessAlert(false);
@@ -79,6 +89,7 @@ const CreateTaskForm: FC = (): ReactElement => {
           id="title"
           name="title"
           label="title"
+          value={title}
           disabled={isLoading}
           placeholder="Task Title"
           onChange={(e) => setTitle(e.target.value)}
@@ -87,6 +98,7 @@ const CreateTaskForm: FC = (): ReactElement => {
           id="description"
           name="description"
           label="description"
+          value={description}
           placeholder="Task Description"
           rows={4}
           multiline
