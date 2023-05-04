@@ -4,17 +4,17 @@ import dayjs from 'dayjs';
 import { Grid, Box, LinearProgress } from '@mui/material';
 import TaskCounter from '../taskCounter/TaskCounter';
 import Task from '../task/Task';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import taskAPI from '../../apis/task';
 import { Status } from '../taskForm/enums/Status';
 import { countTask } from './helpers/countTask';
 
 const TaskArea: FC = (): ReactElement => {
+  const queryClient = useQueryClient();
   const {
     data = [],
     isLoading,
     isError,
-    refetch,
   } = useQuery({
     queryKey: ['tasks'],
     queryFn: taskAPI.getTasks,
@@ -22,6 +22,7 @@ const TaskArea: FC = (): ReactElement => {
 
   const updateTaskMutation = useMutation({
     mutationFn: taskAPI.patchStatus,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tasks'] }),
   });
 
   const onStatusChange = (

@@ -1,5 +1,5 @@
 import { FC, ReactElement, useState, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Box,
   Typography,
@@ -18,6 +18,7 @@ import ICreateTask from '../taskArea/interfaces/ICreateTask';
 import taskAPI from '../../apis/task';
 
 const CreateTaskForm: FC = (): ReactElement => {
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<Dayjs | null>(dayjs());
@@ -27,6 +28,9 @@ const CreateTaskForm: FC = (): ReactElement => {
 
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: taskAPI.postNewTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
   });
 
   const isSubmitDisabled =
