@@ -1,6 +1,6 @@
 # Todo List
 
-A todo list app built using React, TypeScript, Vite, and Material UI
+A todo list app built using React, TypeScript, Vite, TanStack Query and Material UI
 
 ## Requirements
 
