@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Grid, Box, LinearProgress } from '@mui/material';
 import TaskCounter from '../taskCounter/TaskCounter';
 import Task from '../task/Task';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import taskAPI from '../../apis/task';
 import { Status } from '../taskForm/enums/Status';
 
@@ -13,6 +13,32 @@ const TaskArea: FC = (): ReactElement => {
     queryKey: ['tasks'],
     queryFn: taskAPI.getTasks,
   });
+
+  const updateTaskMutation = useMutation({
+    mutationFn: taskAPI.patchStatus,
+  });
+
+  const onStatusChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string,
+  ) => {
+    updateTaskMutation.mutate({
+      id,
+      status: e.target.checked ? Status.IN_PROGRESS : Status.TODO,
+    });
+  };
+
+  const onMarkedAsDone = (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
+    updateTaskMutation.mutate({
+      id,
+      status: Status.DONE,
+    });
+  };
 
   return (
     <Grid item md={8} px={4} xs={12}>
@@ -67,6 +93,8 @@ const TaskArea: FC = (): ReactElement => {
                     description={description}
                     date={new Date(date)}
                     priority={priority}
+                    onChange={onStatusChange}
+                    onClick={onMarkedAsDone}
                   />
                 ),
             )}
