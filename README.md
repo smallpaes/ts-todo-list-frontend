@@ -56,6 +56,8 @@ This project was created using the following technologies:
 - Vite (version 4.3)
 - TypeScript (version 5.0)
 - Material UI (version 5.12)
+- TanStack Query (version 4.29.5)
+- TanStack Query Devtools (version 4.29.6)
 
 ## Folder Structure
 
@@ -64,6 +66,7 @@ The project's folder structure is as follows:
 ```
 ├── public
 ├── src
+│   ├── apis
 │   ├── assets
 │   ├── components
 │   ├── pages
